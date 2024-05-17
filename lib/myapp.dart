@@ -1,8 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:openaiflutter/widgets/homepage.dart';
+import 'package:speech_to_text/speech_recognition_result.dart';
+import 'package:speech_to_text/speech_to_text.dart';
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final speechToText = SpeechToText();
+  String lastwords = '';
+
+  @override
+  void initState() {
+    super.initState();
+    initSpeech();
+  }
+
+  Future<void> initSpeech() async {
+    await speechToText.initialize();
+    setState(() {});
+  }
+
+  /// Each time to start a speech recognition session
+  Future<void> startListening() async {
+    await speechToText.listen(onResult: onSpeechResult);
+    setState(() {});
+  }
+
+  /// Manually stop the active speech recognition session
+  /// Note that there are also timeouts that each platform enforces
+  /// and the SpeechToText plugin supports setting timeouts on the
+  /// listen method.
+  Future<void> stopListening() async {
+    await speechToText.stop();
+    setState(() {});
+  }
+
+  /// This is the callback that the SpeechToText plugin calls when
+  /// the platform returns recognized words.
+  void onSpeechResult(SpeechRecognitionResult result) {
+    setState(() {
+      lastwords = result.recognizedWords;
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    speechToText.stop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +99,19 @@ class MyApp extends StatelessWidget {
       body: const Homepage(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        child: IconButton(onPressed: () {}, icon: const Icon(Icons.mic)),
+        child: IconButton(
+            onPressed: () async {
+              if (await speechToText.hasPermission &&
+                  speechToText.isNotListening) {
+                await startListening();
+              }
+              if (speechToText.isListening) {
+                await stopListening();
+              } else {
+                initSpeech();
+              }
+            },
+            icon: const Icon(Icons.mic)),
       ),
     );
   }
