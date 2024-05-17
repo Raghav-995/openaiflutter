@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
           style: Theme.of(context)
               .textTheme
               .titleLarge!
-              .copyWith(color: Theme.of(context).colorScheme.onSecondary),
+              .copyWith(color: Theme.of(context).colorScheme.secondary),
         ),
       ),
       drawer: Drawer(
@@ -47,6 +47,10 @@ class MyApp extends StatelessWidget {
         ),
       ),
       body: const Homepage(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: IconButton(onPressed: () {}, icon: const Icon(Icons.mic)),
+      ),
     );
   }
 }

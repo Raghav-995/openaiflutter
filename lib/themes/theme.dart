@@ -5,7 +5,7 @@ var kColorScheme = ColorScheme.fromSeed(
   secondary: const Color.fromRGBO(182, 40, 234, 0.725),
   tertiary: const Color.fromRGBO(240, 148, 9, 0.733),
   error: const Color.fromRGBO(230, 4, 4, 0.733),
-  onSecondary: const Color.fromRGBO(64, 34, 234, 0.733),
+  onSecondary: const Color.fromARGB(209, 168, 162, 244),
   onTertiary: const Color.fromRGBO(252, 252, 15, 0.725),
   seedColor: const Color.fromRGBO(67, 234, 34, 0.735),
 );
@@ -27,9 +27,11 @@ ThemeData themeLight = ThemeData().copyWith(
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-      backgroundColor: kColorScheme.primaryContainer,
+      backgroundColor: kColorScheme.primary,
     ),
   ),
+  floatingActionButtonTheme:
+      FloatingActionButtonThemeData(backgroundColor: kColorScheme.primary),
   textTheme: ThemeData().textTheme.copyWith(
       titleLarge: TextStyle(
         fontWeight: FontWeight.bold,
