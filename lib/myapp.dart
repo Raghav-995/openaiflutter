@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:openaiflutter/openai/openai.dart';
 import 'package:openaiflutter/widgets/homepage.dart';
@@ -70,12 +71,14 @@ class _MyAppState extends State<MyApp> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
-          'OpenAI with Flutter',
-          style: Theme.of(context)
-              .textTheme
-              .titleLarge!
-              .copyWith(color: Theme.of(context).colorScheme.secondary),
+        title: BounceInDown(
+          child: Text(
+            'OpenAI with Flutter',
+            style: Theme.of(context)
+                .textTheme
+                .titleLarge!
+                .copyWith(color: Theme.of(context).colorScheme.secondary),
+          ),
         ),
       ),
       drawer: Drawer(
@@ -111,33 +114,36 @@ class _MyAppState extends State<MyApp> {
         gContent: generatedContent,
         gUrl: generatedUrl,
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: IconButton(
-            onPressed: () async {
-              if (await speechToText.hasPermission &&
-                  speechToText.isNotListening) {
-                await startListening();
-              }
-              if (speechToText.isListening) {
-                final speech = await openai.isArtPromptAPI(lastwords);
-                if (speech.contains('https:')) {
-                  generatedContent = null;
-                  generatedUrl = speech;
-                  setState(() {});
-                } else {
-                  generatedContent = speech;
-                  generatedUrl = null;
-                  setState(() {});
-                  await systemSpeak(speech);
+      floatingActionButton: ZoomIn(
+        delay: const Duration(milliseconds: 2000),
+        child: FloatingActionButton(
+          onPressed: () {},
+          child: IconButton(
+              onPressed: () async {
+                if (await speechToText.hasPermission &&
+                    speechToText.isNotListening) {
+                  await startListening();
                 }
+                if (speechToText.isListening) {
+                  final speech = await openai.isArtPromptAPI(lastwords);
+                  if (speech.contains('https:')) {
+                    generatedContent = null;
+                    generatedUrl = speech;
+                    setState(() {});
+                  } else {
+                    generatedContent = speech;
+                    generatedUrl = null;
+                    setState(() {});
+                    await systemSpeak(speech);
+                  }
 
-                await stopListening();
-              } else {
-                initSpeech();
-              }
-            },
-            icon: Icon(speechToText.isListening ? Icons.stop : Icons.mic)),
+                  await stopListening();
+                } else {
+                  initSpeech();
+                }
+              },
+              icon: Icon(speechToText.isListening ? Icons.stop : Icons.mic)),
+        ),
       ),
     );
   }
