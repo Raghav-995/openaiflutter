@@ -1,6 +1,15 @@
-# openaiflutter
+# OpenAi + Flutter
+
+# Description:
+
+It is simple integration of OpenAI Apis in Flutter using the http request where the speech is converted to text and then sent to the OpenApi Api to get the prompt with output in the form of Images or Chat or Text using DALL-E api or Chat api in OpenAI!!
 
 A new Flutter project.
+
+# Output
+
+![Screenshot (121)](https://github.com/Raghav-995/openaiflutter/assets/139675343/2498ff8d-71c2-4147-8790-2f1940af67ff)
+
 
 ## Getting Started
 
