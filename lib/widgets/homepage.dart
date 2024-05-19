@@ -53,7 +53,6 @@ class Homepage extends StatelessWidget {
                       .copyWith(fontSize: 16.0),
             ),
           ),
-          
           Visibility(
             visible: gContent == null,
             child: Container(
@@ -73,7 +72,6 @@ class Homepage extends StatelessWidget {
             visible: gContent == null,
             child: Column(
               children: [
-                if(gUrl!=null){Image.network(gUrl!);}
                 FeatureBox(
                   color: Theme.of(context).colorScheme.primary,
                   heading: 'ChatGPT',
