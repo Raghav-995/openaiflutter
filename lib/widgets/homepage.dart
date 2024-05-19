@@ -53,8 +53,13 @@ class Homepage extends StatelessWidget {
                       .copyWith(fontSize: 16.0),
             ),
           ),
+          if (gUrl != null)
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Image.network(gUrl!),
+            ),
           Visibility(
-            visible: gContent == null,
+            visible: gContent == null && gUrl == null,
             child: Container(
               margin:
                   const EdgeInsets.symmetric(vertical: 4.0, horizontal: 15.0),
@@ -69,7 +74,7 @@ class Homepage extends StatelessWidget {
             ),
           ),
           Visibility(
-            visible: gContent == null,
+            visible: gContent == null && gUrl == null,
             child: Column(
               children: [
                 FeatureBox(

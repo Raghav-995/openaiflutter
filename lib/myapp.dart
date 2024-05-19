@@ -137,7 +137,7 @@ class _MyAppState extends State<MyApp> {
                 initSpeech();
               }
             },
-            icon: const Icon(Icons.mic)),
+            icon: Icon(speechToText.isListening ? Icons.stop : Icons.mic)),
       ),
     );
   }
