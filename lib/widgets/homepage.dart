@@ -88,7 +88,7 @@ class Homepage extends StatelessWidget {
             child: Column(
               children: [
                 SlideInLeft(
-                  duration: const Duration(milliseconds: 500),
+                  duration: const Duration(milliseconds: 300),
                   child: FeatureBox(
                     color: Theme.of(context).colorScheme.primary,
                     heading: 'ChatGPT',
@@ -97,7 +97,7 @@ class Homepage extends StatelessWidget {
                   ),
                 ),
                 SlideInRight(
-                  delay: const Duration(milliseconds: 1000),
+                  delay: const Duration(milliseconds: 600),
                   child: FeatureBox(
                     color: Theme.of(context).colorScheme.onSecondary,
                     heading: 'Dalle-E',
@@ -106,7 +106,7 @@ class Homepage extends StatelessWidget {
                   ),
                 ),
                 SlideInLeft(
-                  delay: const Duration(milliseconds: 1500),
+                  delay: const Duration(milliseconds: 900),
                   child: FeatureBox(
                     color: Theme.of(context).colorScheme.primary,
                     heading: 'Smart Voice Assistant',

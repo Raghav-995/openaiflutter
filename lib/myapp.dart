@@ -115,7 +115,7 @@ class _MyAppState extends State<MyApp> {
         gUrl: generatedUrl,
       ),
       floatingActionButton: ZoomIn(
-        delay: const Duration(milliseconds: 2000),
+        delay: const Duration(milliseconds: 1200),
         child: FloatingActionButton(
           onPressed: () {},
           child: IconButton(
