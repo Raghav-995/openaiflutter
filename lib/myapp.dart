@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:openaiflutter/openai/openai.dart';
 import 'package:openaiflutter/widgets/homepage.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -13,6 +15,10 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final speechToText = SpeechToText();
   String lastwords = '';
+  final OpenAIServices openai = OpenAIServices();
+  FlutterTts flutterTts = FlutterTts();
+  String? generatedUrl;
+  String? generatedContent;
 
   @override
   void initState() {
@@ -48,10 +54,15 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  Future<void> systemSpeak(String content) async {
+    await flutterTts.speak(content);
+  }
+
   @override
   void dispose() {
     super.dispose();
     speechToText.stop();
+    flutterTts.stop();
   }
 
   @override
@@ -96,7 +107,10 @@ class _MyAppState extends State<MyApp> {
           ],
         ),
       ),
-      body: const Homepage(),
+      body: Homepage(
+        gContent: generatedContent,
+        gUrl: generatedUrl,
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         child: IconButton(
@@ -106,6 +120,18 @@ class _MyAppState extends State<MyApp> {
                 await startListening();
               }
               if (speechToText.isListening) {
+                final speech = await openai.isArtPromptAPI(lastwords);
+                if (speech.contains('https:')) {
+                  generatedContent = null;
+                  generatedUrl = speech;
+                  setState(() {});
+                } else {
+                  generatedContent = speech;
+                  generatedUrl = null;
+                  setState(() {});
+                  await systemSpeak(speech);
+                }
+
                 await stopListening();
               } else {
                 initSpeech();
